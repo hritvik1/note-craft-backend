@@ -1,3 +1,3 @@
-export { sqlQueries } from './sql-queries.mjs'
+export { SqlQueries } from './sql-queries.mjs'
 export { DB } from './db.mjs'
-export { commonUtils } from './common-utils.mjs'
+export { CommonUtils } from './common-utils.mjs'

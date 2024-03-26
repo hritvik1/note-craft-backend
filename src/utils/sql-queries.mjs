@@ -1,3 +1,3 @@
-export const sqlQueries = {
+export const SqlQueries = {
 
 }

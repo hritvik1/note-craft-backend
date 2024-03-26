@@ -1,4 +1,4 @@
-export const commonUtils = {
+export const CommonUtils = {
 
   sendErrorResponse : (res, errMessage, code = 400) => {
     const resp = {
