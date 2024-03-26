@@ -1,20 +1,20 @@
 import 'dotenv/config'
 import express from 'express'
 import cors from 'cors'
-import router from './src/routes.mjs'
-import { commonUtils, DB } from './src/utils/index.mjs'
 import http from 'node:http'
+import { router } from './src/routes.mjs'
+import { commonUtils, DB } from './src/utils/index.mjs'
 
 const app     = express(),
       server  = http.createServer(app),
       port    = process.env.PORT
 
+app.set('port', port)
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended : false }))
-app.use((req, res) => commonUtils.sendErrorResponse(res, 'NOT_FOUND', 404))
 app.use('/', router)
-app.set('port', port)
+app.use((req, res) => commonUtils.sendErrorResponse(res, 'NOT_FOUND', 404))
 
 server.listen(port)
 server.on('error', onError)
