@@ -1,4 +1,4 @@
-import * as mysql from 'promise-mysql'
+import mysql from 'promise-mysql'
 
 const ENV   = process.env,
       NULL  = null

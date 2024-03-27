@@ -1,14 +1,18 @@
 export const CommonUtils = {
 
-  sendErrorResponse : (res, errMessage, code = 400) => {
+  sendErrorResponse : (res, errObj) => {
+    errObj.name = errObj.name ?? 'ValidationError'
+    errObj.message = errObj.message ?? ':('
+    errObj.code = errObj.code ?? 400
+
     const resp = {
       data : {
-        error           : 'ValidationError',
-        ValidationError : errMessage
+        error   : errObj.name,
+        message : errObj.message
       }
     }
 
     res.body = resp
-    res.status(code).json(resp)
+    res.status(errObj.code).json(resp)
   }
 }
