@@ -2,7 +2,6 @@ import 'dotenv/config'
 import express from 'express'
 import cors from 'cors'
 import http from 'node:http'
-import cookieParser from 'cookie-parser'
 import { Router } from './src/routes.mjs'
 import { DB } from './src/utils/index.mjs'
 
@@ -14,7 +13,6 @@ app.set('port', port)
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended : false }))
-app.use(cookieParser())
 app.use('/', Router)
 
 server.listen(port)
