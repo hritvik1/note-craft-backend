@@ -1,4 +1,5 @@
 import mysql from 'promise-mysql'
+import { ErrorResponses } from './error-responses.mjs'
 
 const ENV   = process.env,
       NULL  = null
@@ -10,9 +11,10 @@ class DatabaseOperations {
   }
 
   async executeQuery(query) {
+    console.debug('executeQuery %s', query)
 
     if(!this._pool) {
-      console.debug('Creating DB pool')
+      console.debug('Creating DB pool..')
 
       const pool = mysql.createPool({
         connectionLimit : 20,
@@ -31,16 +33,16 @@ class DatabaseOperations {
     try {
       const result = await this._pool.query(query)
 
-      console.debug('executeQuery %s %s', query, JSON.stringify(result))
+      console.debug('Query result: %s', JSON.stringify(result))
       return result
     } catch(e) {
-      console.error('executeQuery error %s %s', query, e)
-      throw new Error('Error occurred while executing DB query')
+      console.error('Error executing db query %s', e)
+      throw new Error(ErrorResponses.message.ERROR_EXECUTING_DB_QUERY)
     }
   }
 
   async close() {
-    console.info('Closing DB')
+    console.info('Closing db connection..')
 
     if(!this._pool) return
     await this._pool.end()

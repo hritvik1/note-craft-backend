@@ -1,18 +1,24 @@
 export const CommonUtils = {
 
-  sendErrorResponse : (res, errObj) => {
-    errObj.name = errObj.name ?? 'ValidationError'
-    errObj.message = errObj.message ?? ':('
-    errObj.code = errObj.code ?? 400
+  sendSuccessResponse : (res, data) => {
+    const resp = {
+      data : { success : 'OperationSuccess' }
+    }
 
+    if(data) resp.data.response = data
+    res.body = resp
+    res.status(200).json(resp)
+  },
+
+  sendErrorResponse : (res, errMessage, errName = 'ValidationError', errCode = 400) => {
     const resp = {
       data : {
-        error   : errObj.name,
-        message : errObj.message
+        error   : errName,
+        message : errMessage ?? []
       }
     }
 
     res.body = resp
-    res.status(errObj.code).json(resp)
+    res.status(errCode).json(resp)
   }
 }

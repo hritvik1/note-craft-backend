@@ -10,7 +10,9 @@ const app     = express(),
       port    = process.env.PORT
 
 app.set('port', port)
-app.use(cors())
+app.use(cors({
+  exposedHeaders : ['x-access-token', 'x-refresh-token']                  // TODO - remove 'x-' from header name
+}))
 app.use(express.json())
 app.use(express.urlencoded({ extended : false }))
 app.use('/', Router)
@@ -23,12 +25,12 @@ process.on('SIGINT', () => closeServer())
 process.on('SIGTERM', () => closeServer())
 
 function onError(err) {
-  console.error('Server Error: %s', err)
+  console.error('Server error: %s', err)
   closeServer()
 }
 
 function onListening() {
-  console.info('Server listening: %s', port)
+  console.info('Server listening on port %s', port)
 }
 
 async function closeServer() {
